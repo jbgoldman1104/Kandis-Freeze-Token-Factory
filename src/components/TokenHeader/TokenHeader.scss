@@ -1,0 +1,50 @@
+@import '../../styles/styles.scss';
+
+.TokenHeader {
+    
+    .TokenCardHeader {
+
+        .NavBackAction {
+            display: inline-flex;
+            align-items: center;
+            color: inherit;
+            text-decoration: none;
+            min-height: 54px;
+    
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.08);
+            }
+
+            svg {
+                margin-left: 1em;
+            }
+    
+            h3 {
+                font-weight: 500;
+                margin: 0 0 0 .5em;
+                margin-right: 1em;
+            }
+
+        }
+    }
+
+    .TokenHeaderCardAction {
+        min-height: 54px;
+
+        button {
+            color: $text-color;
+            background-color: transparent;
+            font-size: 16px;
+            min-height: inherit;
+            
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.08);
+            }
+
+            svg {
+                width: 20px;
+                margin-right: 0.25em;
+            }
+        }
+    }
+}

@@ -1,0 +1,25 @@
+@import '../../styles/styles.scss';
+
+.InfoCard {
+    background-color: rgba(18, 18, 18, 0.8) !important;
+    
+    h2 {
+        font-weight: 400;
+        margin: 0 0 .5em  0;
+        
+    }
+
+    h3 {
+        font-weight: 400;
+        margin: 2em;
+
+    }
+
+    .InfoCardDivider {
+        height: 2px;
+        width: 74px;
+        background-color: $text-color;
+        margin: 0 0 2em 0;
+
+    }
+}

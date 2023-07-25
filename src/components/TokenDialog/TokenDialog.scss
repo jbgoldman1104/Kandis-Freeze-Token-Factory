@@ -1,0 +1,19 @@
+@import '../../styles/styles.scss';
+
+.TokenDialog {
+    position: relative;
+
+    .ButtonWrapper {
+        display: flex;
+        justify-content: end;
+    }
+
+    button {
+        min-width: 164px;
+        
+    }
+    .TokenDialogActions{
+        justify-content: space-between;
+
+    }
+}

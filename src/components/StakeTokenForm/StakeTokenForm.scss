@@ -1,0 +1,59 @@
+@import '../../styles/styles.scss';
+
+.StakeTokenForm {
+
+    .NavBackAction {
+        display: inline-flex;
+        align-items: center;
+        color: inherit;
+        text-decoration: none;
+        min-height: 54px;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+
+        svg {
+            margin-left: 1em;
+        }
+
+        h3 {
+            font-weight: 500;
+            margin: 0 0 0 .5em;
+            margin-right: 1em;
+        }
+
+    }
+    
+    .TokenCard {
+        min-height: 120px;
+        border: $default-border;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        .TokenCardHeader {
+            padding: 0;
+            margin-bottom: 0.5em;
+            
+            span {
+                font-weight: 300;
+                font-size: 16px;
+
+            }
+        }
+
+        .TokenCardContent {
+            padding: 0 20px;
+            font-size: 20px;
+            font-weight: 500;
+
+            img {
+                min-width: 100px;
+                max-height: 110px;
+
+            }
+        }
+    }
+}

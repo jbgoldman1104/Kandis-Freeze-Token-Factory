@@ -1,0 +1,36 @@
+@import '../../styles/styles.scss';
+
+.ServiceInfoForm {
+    overflow: auto;
+
+    .CardContent {
+
+        #description {
+            min-height: 119px;
+            
+        }
+
+        .InitialBalancesHeader {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            padding: 0 2em;
+
+        }
+
+        .InitialBalance {
+            padding: 0 2em;
+            margin-bottom: 1em;
+
+            .InitialBalanceRemoveItem {
+                display: flex;
+                align-items: flex-end;
+    
+                button {
+                    color: $text-color;
+                    background-color: transparent;
+                }
+            }
+        }
+    }
+}

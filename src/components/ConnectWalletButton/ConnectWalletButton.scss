@@ -1,0 +1,52 @@
+@import '../../styles/styles.scss';
+
+.ConnectWalletButton {
+    /* Rectangle 531 */
+
+    
+
+    #ConnectWalletButtonMenu.connected {
+        color: #FAD64B;
+        border: 1px solid #FAD64B !important;
+    }
+
+    #ConnectWalletButtonMenu {
+        color: white;
+        background-color: transparent;
+        box-sizing: border-box;
+        font-size: 20px;
+        border: 1px solid #FFFFFF !important;
+        backdrop-filter: blur(50px);
+        /* Note: backdrop-filter has minimal browser support */
+        border-radius: 10px;
+        width: 200px !important;
+        svg {
+            margin-right: 0.5em;
+        }
+    }
+
+    #AdminPanelButtonMenu {
+        color: white;
+        background-color: transparent;
+        margin-right: 0.5em;
+
+        svg {
+            margin-right: 0.5em;
+        }
+    }
+}
+
+#ConnectWalletOptions {
+        
+    .CopyEntry {
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        margin-right: 0.5em;
+
+        svg {
+            height: 16px;
+
+        }
+    }
+}

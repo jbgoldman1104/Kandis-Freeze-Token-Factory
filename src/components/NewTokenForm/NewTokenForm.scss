@@ -1,0 +1,82 @@
+@import '../../styles/styles.scss';
+
+.NewTokenForm {
+    overflow: auto;
+
+    .CardContent {
+
+        .CardHeader {
+            /* Create your own tokens with one click! 4 Tokens Created */
+            font-style: normal;
+            font-weight: 700;
+            font-size: 40px;
+            line-height: 124%;
+            /* or 50px */
+            text-align: center;
+            color: #FFFFFF;
+
+            text-shadow: 0px 0px 30px rgba(250, 214, 75, 0.21);
+
+            .YellowBox {
+                width: 64px;
+                height: 64px;
+                /* Rectangle 170 */
+                background: linear-gradient(180deg, #E5E5E6 0%, #AEBCCD 28.62%, #FAD64B 100%);
+                border-radius: 5px;
+                transform: rotate(-180deg);
+                display: inline-block;
+                margin-top: 20px;
+            }   
+            .NumberBox {
+                /* Rectangle 313 */
+                line-height: 1.4;
+                display: flex;
+                background: rgb(41,37,21);
+                border: 1px solid #FFFFFF;
+                backdrop-filter: blur(50px);
+                /* Note: backdrop-filter has minimal browser support */
+                border-radius: 5px;
+                color: $yellow-color;
+                padding-left: 20px;
+                padding-right: 20px;
+                margin-left: -30px;
+                height: 54px;
+                // padding-bottom: 6px;
+                
+            }
+
+            .FollowingPhase {
+                margin-left: 10px;
+                line-height: 1.4;
+            }
+        }
+
+        #description {
+            min-height: 0px;
+            
+        }
+
+        .InitialBalancesHeader {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            
+
+        }
+
+        .InitialBalance {
+            padding: 0;
+            margin-bottom: 1em;
+
+            .InitialBalanceRemoveItem {
+                display: flex;
+                align-items: flex-end;
+    
+                button {
+                    color: $yellow-color;
+                    background-color: transparent;
+                }
+            }
+        }
+    }
+}

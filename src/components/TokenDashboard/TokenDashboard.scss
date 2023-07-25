@@ -1,0 +1,36 @@
+@import '../../styles/styles.scss';
+
+.TokenDashboard {
+
+    .TokenCard {
+        min-height: 120px;
+        border: $default-border;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        .TokenCardHeader {
+            padding: 0;
+            margin-bottom: 0.5em;
+            
+            span {
+                font-weight: 300;
+                font-size: 16px;
+
+            }
+        }
+
+        .TokenCardContent {
+            padding: 0 20px;
+            font-size: 20px;
+            font-weight: 500;
+
+            img {
+                min-width: 100px;
+                max-height: 110px;
+
+            }
+        }
+    }
+}
