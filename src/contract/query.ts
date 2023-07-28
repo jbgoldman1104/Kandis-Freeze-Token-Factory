@@ -1,30 +1,31 @@
 import { LCDClient } from '@terra-money/terra.js'
 import { ConnectedWallet } from '@terra-money/wallet-provider'
-import { factoryAddress } from './address'
+import { factoryAddress, networkLCD, chainID  } from './address'
 import { AllAccountsResponse, MarketingResponse, MintedTokensResponse, MinterResponse, ServiceInfoResponse, TokenData, TokenInfoResponse } from '../models/query';
-import { Address } from '../models/address';
+import { Address} from '../models/address';
+
 
 export const getMintedTokens = async (wallet: ConnectedWallet): Promise<MintedTokensResponse> => {
     const lcd = new LCDClient({
-        URL: wallet.network.lcd,
-        chainID: wallet.network.chainID,
+        URL: networkLCD,
+        chainID: chainID,
     })
-    return lcd.wasm.contractQuery(factoryAddress(wallet), { get_minted_tokens: {} })
+    return lcd.wasm.contractQuery(factoryAddress(), { get_minted_tokens: {} })
 }
 
 export const getServiceInfo = async (wallet: ConnectedWallet): Promise<ServiceInfoResponse> => {
     const lcd = new LCDClient({
-        URL: wallet.network.lcd,
-        chainID: wallet.network.chainID,
+        URL: networkLCD,
+        chainID,
     })
-    return lcd.wasm.contractQuery(factoryAddress(wallet), { get_service_info: {} })
+    return lcd.wasm.contractQuery(factoryAddress(), { get_service_info: {} })
 }
 
 export const getTokenInfo = async (tokenAddress: Address, wallet: ConnectedWallet, lcd?: LCDClient): Promise<TokenData> => {
     if (!lcd) {
         lcd = new LCDClient({
-            URL: wallet.network.lcd,
-            chainID: wallet.network.chainID,
+            URL: networkLCD,
+            chainID,
         });
     }
 
@@ -62,8 +63,8 @@ export const getTokenInfo = async (tokenAddress: Address, wallet: ConnectedWalle
 
 export const getTokenData = async (tokenAddress: Address, wallet: ConnectedWallet): Promise<TokenData> => {
     const lcd = new LCDClient({
-        URL: wallet.network.lcd,
-        chainID: wallet.network.chainID,
+        URL: networkLCD,
+        chainID,
     });
     let tokenData: TokenData = await getTokenInfo(tokenAddress, wallet, lcd);
 
@@ -84,8 +85,8 @@ export const getTokenData = async (tokenAddress: Address, wallet: ConnectedWalle
 
 export const getTokenAccountsWithBalance = async (tokenAddress: Address, wallet: ConnectedWallet): Promise<Array<{balance:number, address: Address}>> => {
     const lcd = new LCDClient({
-        URL: wallet.network.lcd,
-        chainID: wallet.network.chainID,
+        URL: networkLCD,
+        chainID,
     });
 
     let res: AllAccountsResponse = await lcd.wasm.contractQuery(tokenAddress, {
@@ -112,8 +113,8 @@ export const getTokenAccountsWithBalance = async (tokenAddress: Address, wallet:
 
 export const getAccountBalance = async (tokenAddress: Address, address: Address, wallet: ConnectedWallet): Promise<number> => {
     const lcd = new LCDClient({
-        URL: wallet.network.lcd,
-        chainID: wallet.network.chainID,
+        URL: networkLCD,
+        chainID,
     });
 
     try {

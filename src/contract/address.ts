@@ -2,12 +2,15 @@
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import config from "../refs.terrain.json"
 
-export const factoryAddress = (wallet: ConnectedWallet) => {
+export const factoryAddress = () => {
     // @ts-ignore
-    return config[wallet.network.name]["token-factory"].contractAddresses.default;
+    return config["classic"]["token-factory"].contractAddresses.default;
 }
 
-export const tokenAddress = (wallet: ConnectedWallet) => {
+export const tokenAddress = () => {
     // @ts-ignore
-    return config[wallet.network.name]["cw20-factory-token"].contractAddresses.default;
+    return config["classic"]["cw20-factory-token"].contractAddresses.default;
 }
+
+export const networkLCD = "https://terra-classic-lcd.publicnode.com";
+export const chainID = "columbus-5";

@@ -30,23 +30,24 @@ function Token() {
     }, [wallet, connectedWallet])
 
     const fetchData = async () => {
-        if (wallet.status === WalletStatus.WALLET_CONNECTED) {
+        // if (wallet.status === WalletStatus.WALLET_CONNECTED) 
+        {
             const tokenData = await getTokenData(id as Address, connectedWallet);
             setLoading(false);
             setTokenData(tokenData);
 
             setLoadingTokeHolders(true);
             const holders = await getTokenAccountsWithBalance(id as Address, connectedWallet);
-            const holding = holders.find(holding => holding.address === connectedWallet.terraAddress);
+            const holding = holders.find(holding => connectedWallet && holding.address === connectedWallet.terraAddress);
             if(holding && tokenData.decimals){
                 setWalletHoldings(holding.balance / (10 ** tokenData.decimals))
             }
             setTokenHolders({ holders });
             setLoadingTokeHolders(false);
         }
-        else {
-            setLoading(true)
-        }
+        // else {
+        //     setLoading(true)
+        // }
     }
 
     const onOpenMintToken = () => setDialogType("MINT");

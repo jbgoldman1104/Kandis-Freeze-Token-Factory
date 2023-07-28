@@ -18,7 +18,8 @@ function Tokens() {
 
     useEffect(() => {
         const preFetch = async () => {
-            if (status === WalletStatus.WALLET_CONNECTED) {
+            // if (status === WalletStatus.WALLET_CONNECTED) 
+            {
                 const tokensAddresses = await query.getMintedTokens(connectedWallet);
 
                 const tokensPromises = tokensAddresses.minted_tokens.map(tokenAddress => {
@@ -37,9 +38,9 @@ function Tokens() {
                 setTokens(tokens);
                 setLoading(false);
             }
-            else {
-                setLoading(true);
-            }
+            // else {
+            //     setLoading(true);
+            // }
         }
         preFetch()
     }, [status, connectedWallet]);
@@ -50,10 +51,10 @@ function Tokens() {
         <div className="Tokens">
             <div style={{display:"flex", justifyContent:"space-between"}}>
                 <TokensListHeader/>
-                <Button disableRipple style={{backgroundImage: "none", backgroundColor:"transparent"}}
+                { connectedWallet && <Button disableRipple style={{backgroundImage: "none", backgroundColor:"transparent"}}
                     onClick={()=>{ navigate("/create-token");}}>
                     <CreateTokenHeader/>
-                </Button>
+                </Button>}
             </div>
             <TokensTable tokens={tokens}
                 loading={loading}

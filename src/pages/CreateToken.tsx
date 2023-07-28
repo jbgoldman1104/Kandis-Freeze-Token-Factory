@@ -47,7 +47,7 @@ function CreateToken() {
     }
     catch(e) {
       console.log(e);
-      enqueueSnackbar(`Failed to Create Token.Check if you have enough tokens in your wallet.`, {variant: "error"});
+      enqueueSnackbar(`Failed to Create Token.Check the token parameters and your wallet balance.`, {variant: "error"});
     }
     setLoading(false);
   }

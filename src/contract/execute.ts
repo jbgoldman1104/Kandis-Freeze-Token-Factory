@@ -206,13 +206,13 @@ export const mintToken = async (
   const executeMsg = [
     new MsgExecuteContract(
       connectedWallet.walletAddress,
-      factoryAddress(connectedWallet),
+      factoryAddress(),
       {
         deposit: {
           mint: {
             token_address: tokenData.address,
             recipient: userData.address,
-            // allowance_address: factoryAddress(connectedWallet)
+            // allowance_address: factoryAddress()
           }
         }
       },
@@ -233,10 +233,10 @@ export const createNewToken = async (token: Token, wallet: Wallet, connectedWall
   const executeMsg = [
     new MsgExecuteContract(
       connectedWallet.walletAddress,
-      tokenAddress(connectedWallet),
+      tokenAddress(),
       {
         send: {
-          contract: factoryAddress(connectedWallet),
+          contract: factoryAddress(),
           amount: serviceFee.service_fee,
           msg
         }
@@ -258,14 +258,14 @@ export const burnToken = async (
       tokenData.address as string,
       {
         increase_allowance: {
-          spender: factoryAddress(connectedWallet),
+          spender: factoryAddress(),
           amount: (Number(userData.amount) * 10 ** DECIMALS).toString()
         }
       }
     ),
     new MsgExecuteContract(
       connectedWallet.walletAddress,
-      factoryAddress(connectedWallet),
+      factoryAddress(),
       {
         burn: {
           token_address: tokenData.address,
@@ -278,7 +278,7 @@ export const burnToken = async (
       tokenData.address as string,
       {
         decrease_allowance: {
-          spender: factoryAddress(connectedWallet),
+          spender: factoryAddress(),
           amount: (Number(userData.amount) * 10 ** DECIMALS).toString()
         }
       }
@@ -296,7 +296,7 @@ export const updateServiceInfo = async (
   const executeMsg = [
     new MsgExecuteContract(
       connectedWallet.walletAddress,
-      factoryAddress(connectedWallet),
+      factoryAddress(),
       {
         update_service_info: {
           service_fee, dist_percent, dist_address, admin_address

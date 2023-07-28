@@ -27,7 +27,7 @@ function NewTokenForm(props: Props) {
         if(connectedWallet) {
             setTokenData({
                 ...tokenData,
-                minter: factoryAddress(connectedWallet)
+                minter: factoryAddress()
             })
         }
     },[connectedWallet])
@@ -145,19 +145,19 @@ function NewTokenForm(props: Props) {
                             defaultValue={tokenData.decimals} />
                     </Grid>
                     
-                    {/* <Grid item xs={4}>
+                    <Grid item xs={4}>
                             <span className='InputLabel'>
-                                Project Name
+                                Capacity
                             </span>
                             <TextField fullWidth
-                                id="project"
-                                type="text"
+                                id="cap"
+                                type="number"
                                 className='InputField'
                                 onChange={(event) => onValueChange(event)}
                                 variant="outlined"
-                                defaultValue={tokenData.project} />
-                        </Grid> */}
-                    <Grid item xs={8}>
+                                defaultValue={tokenData.cap} />
+                        </Grid> 
+                    <Grid item xs={4}>
                             <span className='InputLabel'>
                                 Project Description
                             </span>

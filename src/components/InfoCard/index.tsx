@@ -16,7 +16,7 @@ function InfoCard() {
             if (status === WalletStatus.WALLET_CONNECTED) {
                 try {
                     const serviceFee = await getServiceInfo(connectedWallet);
-                    const tk = tokenAddress(connectedWallet);
+                    const tk = tokenAddress();
                     setServiceFee((Number(serviceFee.service_fee)/1000000).toString())
                     setTokenAddr(tk)
                 } catch (e) {

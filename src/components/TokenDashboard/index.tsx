@@ -26,7 +26,7 @@ function TokenDashboard(props: Props) {
             container
             alignItems="center"
             spacing={3}>
-            <Grid item xs={3}>
+            <Grid item xs={4}>
                 <Card className="TokenCard" style={{"cursor":"pointer"}} onClick={(e)=> {
                     e.preventDefault();
                     const addr = token.address as string;
@@ -63,27 +63,36 @@ function TokenDashboard(props: Props) {
             </Grid>
 
 
-            <Grid item xs={3}>
+            <Grid item xs={2}>
                 <Card className="TokenCard">
                     <CardHeader className="TokenCardHeader" title="Name" />
                     <CardContent className="TokenCardContent">{token.name}</CardContent>
                 </Card>
             </Grid>
 
-            <Grid item xs={3}>
+            <Grid item xs={2}>
                 <Card className="TokenCard">
                     <CardHeader className="TokenCardHeader" title="Symbol" />
                     <CardContent className="TokenCardContent">{token.symbol}</CardContent>
                 </Card>
             </Grid>
 
-            <Grid item xs={3}>
+            <Grid item xs={2}>
                 <Card className="TokenCard">
                     <CardHeader className="TokenCardHeader" title="Total Supply" />
                     <CardContent className="TokenCardContent">
                         {token.total_supply &&
                             <span>{Number(token.total_supply) / 10 ** Number(token.decimals)}</span>
                         }
+                    </CardContent>
+                </Card>
+            </Grid>
+
+            <Grid item xs={2}>
+                <Card className="TokenCard">
+                    <CardHeader className="TokenCardHeader" title="Capacity" />
+                    <CardContent className="TokenCardContent">
+                        {token.cap ? Number(token.cap) / 10 ** Number(token.decimals): "Infinity"}
                     </CardContent>
                 </Card>
             </Grid>
