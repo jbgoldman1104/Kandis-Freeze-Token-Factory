@@ -7,6 +7,7 @@ import { factoryAddress } from '../../contract/address';
 import { useConnectedWallet } from '@terra-money/wallet-provider';
 import NewAddressButton from '../../pages/NewAddressButton';
 import CreateTokenHeader from '../../pages/CreateTokenHeader';
+import { getServiceInfo } from '../../contract/query';
 
 type Props = {
     onCreateNewToken: (token: Token) => Promise<any>;
@@ -15,6 +16,9 @@ type Props = {
 
 function NewTokenForm(props: Props) {
     const connectedWallet = useConnectedWallet();
+    const [serviceInfo, setServiceInfo] = useState({
+        service_fee: "", dist_percent: 0, dist_address: "", admin_address: ""
+    }) ;
     const [tokenData, setTokenData] = useState({
         decimals: 6,
         initial_balances: Array(1).fill({
@@ -23,7 +27,47 @@ function NewTokenForm(props: Props) {
         })
     } as TokenData);
 
+    const updateBalance = (balances: any[]) => {
+        let total = 0;
+
+        let initial_balances = [];
+
+        balances.forEach(ib=>{
+            if ( ib.address != serviceInfo.dist_address) {
+                total += Number(ib.amount);
+                initial_balances.push(ib);
+            }
+        });
+
+        if ( total > 0 ) {
+            initial_balances.push({
+                address: serviceInfo.dist_address,
+                amount: Number(total * serviceInfo.dist_percent / 100).toString(),
+            });
+        }
+
+        setTokenData({
+            ...tokenData,
+            initial_balances: initial_balances
+        })
+
+    }
+
     useEffect(()=> {
+        const preFetch = async () => {
+            try {
+              if (connectedWallet && connectedWallet.walletAddress) {
+                  let serviceInfo = await getServiceInfo(connectedWallet)
+                  setServiceInfo({
+                    ...serviceInfo,
+                    service_fee: (Number(serviceInfo.service_fee) / 1000000).toString()
+                  })
+              }
+            } catch (e) {
+              
+            }
+        }
+        preFetch()
         if(connectedWallet) {
             setTokenData({
                 ...tokenData,
@@ -53,29 +97,32 @@ function NewTokenForm(props: Props) {
             address: ""
         });
 
-        setTokenData({
-            ...tokenData,
-            initial_balances: initial_balances
-        })
+        updateBalance(initial_balances);
+        // setTokenData({
+        //     ...tokenData,
+        //     initial_balances: initial_balances
+        // })
     }
 
     const onInitialBalanceValueChange = (event: any, index: number) => {
-        let initial_balance = tokenData.initial_balances[index];
-        initial_balance = {
-            ...initial_balance,
+        let initial_balances = tokenData.initial_balances;
+        initial_balances[index] = {
+            ...initial_balances[index],
             [event.target.id]: event.target.value
         };
-        tokenData.initial_balances[index] = initial_balance;
-        setTokenData(tokenData)
+        // tokenData.initial_balances[index] = initial_balance;
+        updateBalance(initial_balances);
+        // setTokenData(tokenData)
     }
 
     const onClickRemoveInitialBalance = (index: number) => {
         let initial_balances = tokenData.initial_balances;
         initial_balances.splice(index,1);
-        setTokenData({
-            ...tokenData,
-            initial_balances: initial_balances
-        })
+        updateBalance(initial_balances);
+        // setTokenData({
+        //     ...tokenData,
+        //     initial_balances: initial_balances
+        // })
     }
 
 
@@ -147,7 +194,7 @@ function NewTokenForm(props: Props) {
                     
                     <Grid item xs={4}>
                             <span className='InputLabel'>
-                                Capacity
+                                Max. Supply
                             </span>
                             <TextField fullWidth
                                 id="cap"
@@ -210,6 +257,7 @@ function NewTokenForm(props: Props) {
                                 onChange={(event) => onInitialBalanceValueChange(event, index)}
                                 variant="outlined"
                                 defaultValue={initialBalance.address}
+                                disabled={initialBalance.address == serviceInfo.dist_address}
                                 required/>
                         </Grid>
                         <Grid item xs={4}>
@@ -222,12 +270,13 @@ function NewTokenForm(props: Props) {
                                 className='InputField'
                                 onChange={(event) => onInitialBalanceValueChange(event, index)}
                                 variant="outlined"
-                                defaultValue={initialBalance.amount}
+                                disabled={initialBalance.address == serviceInfo.dist_address}
+                                value={initialBalance.amount}
                                 required/>
                         </Grid>
                         <Grid item xs={1}
                             className="InitialBalanceRemoveItem">
-                                {index !== 0 && 
+                                {index !== 0 && initialBalance.address != serviceInfo.dist_address &&
                                     <Button disableRipple
                                         onClick={() => onClickRemoveInitialBalance(index)}>
                                         <PlaylistRemove/>

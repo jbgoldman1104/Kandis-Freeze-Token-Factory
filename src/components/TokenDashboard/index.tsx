@@ -90,7 +90,7 @@ function TokenDashboard(props: Props) {
 
             <Grid item xs={2}>
                 <Card className="TokenCard">
-                    <CardHeader className="TokenCardHeader" title="Capacity" />
+                    <CardHeader className="TokenCardHeader" title="Max. Supply" />
                     <CardContent className="TokenCardContent">
                         {token.cap ? Number(token.cap) / 10 ** Number(token.decimals): "Infinity"}
                     </CardContent>

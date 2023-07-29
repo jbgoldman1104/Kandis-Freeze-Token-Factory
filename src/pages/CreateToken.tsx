@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 import { TokenData } from '../models/query';
 import * as query from '../contract/query';
+import { tokenAddress } from "../contract/address";
 
 function CreateToken() {
   const { enqueueSnackbar } = useSnackbar();
@@ -36,6 +37,17 @@ function CreateToken() {
   const onCreateNewToken = async (token: Token): Promise<any> => {
     setLoading(true);
     try {
+
+      const walletBalance = await query.getAccountBalance(tokenAddress(), connectedWallet.walletAddress, connectedWallet);
+      const serviceFee = Number((await query.getServiceInfo(connectedWallet)).service_fee);
+
+      if ( walletBalance < serviceFee ) {
+        enqueueSnackbar(`Failed to Create Token. minimal required amount is : ${serviceFee /1000000}`, {variant: "error"});
+        setLoading(false);
+        return;
+      }
+
+
       const newTokenResponse = await execute.createNewToken(token, wallet, connectedWallet);
 
       if (newTokenResponse.logs) {
