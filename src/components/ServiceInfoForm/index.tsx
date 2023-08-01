@@ -2,7 +2,7 @@ import './ServiceInfoForm.scss';
 import { useEffect, useState } from 'react'
 import { Token, TokenData, TokenUtils } from './../../models/token';
 import { Button, Card, CardContent, CardHeader, Grid, TextField } from '@mui/material';
-import { Add, PersonAdd, PlaylistRemove } from '@mui/icons-material';
+import { Add, CommentBank, PersonAdd, PlaylistRemove } from '@mui/icons-material';
 import { factoryAddress } from '../../contract/address';
 import { useConnectedWallet } from '@terra-money/wallet-provider';
 import { getServiceInfo } from '../../contract/query';
@@ -10,6 +10,8 @@ import { getServiceInfo } from '../../contract/query';
 
 type Props = {
     onUpdateServiceInfo: (service_info: any) => Promise<any>;
+    onShowDialog: ()=> any;
+    totalAmount: Number;
 };
 
 function ServiceInfoForm(props: Props) {
@@ -44,6 +46,11 @@ function ServiceInfoForm(props: Props) {
         await props.onUpdateServiceInfo(serviceInfo);
     }
 
+    const showDialog = async (event: any) => {
+        event.preventDefault();
+        await props.onShowDialog();
+    }
+
     const onValueChange = (event: any) => {
         // @ts-ignore;
         setServiceInfo({
@@ -56,11 +63,24 @@ function ServiceInfoForm(props: Props) {
     return (
         <Card className="ServiceInfoForm">
             <CardHeader action={
-                <Button className="SubmitActionButton"
-                    variant="contained"
-                    startIcon={<Add />}
-                    onClick={submitServiceInfo}
-                    disableRipple>Update Service Info</Button>
+                <div>
+                    {props.totalAmount.valueOf() > 0 && <Button className="SubmitActionButton"
+                        variant="contained"
+                        startIcon={<CommentBank />}
+                        onClick={showDialog}
+                        disableRipple>Withdraw KLT Tokens</Button>
+                    }
+
+                    <span style={{padding: "10px"}}>
+                        
+                    </span>
+
+                    <Button className="SubmitActionButton"
+                        variant="contained"
+                        startIcon={<Add />}
+                        onClick={submitServiceInfo}
+                        disableRipple>Update Service Info</Button>
+                </div>
                 }
             />
             <CardContent className="CardContent">

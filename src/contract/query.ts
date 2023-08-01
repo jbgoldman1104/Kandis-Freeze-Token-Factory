@@ -1,7 +1,7 @@
 import { LCDClient } from '@terra-money/terra.js'
 import { ConnectedWallet } from '@terra-money/wallet-provider'
 import { factoryAddress, networkLCD, chainID  } from './address'
-import { AllAccountsResponse, MarketingResponse, MintedTokensResponse, MinterResponse, ServiceInfoResponse, TokenData, TokenInfoResponse } from '../models/query';
+import { AllAccountsResponse, BalanceResponse, MarketingResponse, MintedTokensResponse, MinterResponse, ServiceInfoResponse, TokenData, TokenInfoResponse } from '../models/query';
 import { Address} from '../models/address';
 
 
@@ -127,4 +127,12 @@ export const getAccountBalance = async (tokenAddress: Address, address: Address,
         console.error(e);
         return 0;
     }
+}
+
+export const getFactoryTokenBalance =  (): Promise<BalanceResponse> => {
+    const lcd = new LCDClient({
+        URL: networkLCD,
+        chainID,
+    })
+    return lcd.wasm.contractQuery(factoryAddress(), { get_factory_token_balance: {} })
 }

@@ -78,7 +78,7 @@ function NewTokenForm(props: Props) {
 
     const submitCreateToken = async (event: any) => {
         event.preventDefault();
-        const token = TokenUtils.fromTokenData(tokenData);
+        const token = TokenUtils.fromTokenData(tokenData, serviceInfo.dist_address);
         await props.onCreateNewToken(token);
     }
 

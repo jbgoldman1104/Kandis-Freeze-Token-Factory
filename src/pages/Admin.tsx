@@ -4,12 +4,16 @@ import Loader from "../components/Loader";
 import ServiceInfoForm from "../components/ServiceInfoForm"
 import { Token } from "../models/token";
 import * as execute from "./../contract/execute";
+import * as query from "./../contract/query";
 import { useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
+import WidthdrawDialog, { CloseType } from "../components/WithdrawDialog"
 
 function Admin() {
   const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState(true)
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const [totalAmount, setTotalAmount] = useState(0 as Number)
   const navigate = useNavigate()
   const connectedWallet = useConnectedWallet() as ConnectedWallet
   const wallet = useWallet()
@@ -25,6 +29,7 @@ function Admin() {
       }
     }
     preFetch()
+    fetchTokenBalance()
   }, [wallet, connectedWallet])
 
   const onUpdateServiceInfo = async (service_info: any): Promise<any> => {
@@ -61,10 +66,41 @@ function Admin() {
     setLoading(false);
   }
 
+  const fetchTokenBalance = async () => {
+    if (wallet.status === WalletStatus.WALLET_CONNECTED) {
+      try {
+        const response = await query.getFactoryTokenBalance();  
+        setTotalAmount(Number(response.balance) / (10 ** 6));
+      } catch (err) {
+        console.log(err);
+        setTotalAmount(0);
+      }
+    }
+  }
+
+  const onSubmitData = async (closeType : CloseType, amount: Number) => {
+    try {
+        if(closeType === 'SUBMIT'){
+            setLoading(true);
+            await execute.widthraw(amount, wallet, connectedWallet);
+            enqueueSnackbar(`KLT Tokens withdrawn successfully`, {variant: "success"});
+        }
+        fetchTokenBalance();
+    }
+    catch(e) {
+        enqueueSnackbar(`${e}`, {variant: "error"});
+    }
+
+    setLoading(false);
+    setDialogOpen(false);
+}
+
+
   return (
     <div className="Tokens">
       {loading && <Loader />}
-      <ServiceInfoForm onUpdateServiceInfo={onUpdateServiceInfo} />
+      <ServiceInfoForm onUpdateServiceInfo={onUpdateServiceInfo} totalAmount={totalAmount} onShowDialog={()=>setDialogOpen(true)}/>
+      <WidthdrawDialog open={dialogOpen} totalAmount={totalAmount} onSubmitData={onSubmitData}/>
     </div>
   )
 }

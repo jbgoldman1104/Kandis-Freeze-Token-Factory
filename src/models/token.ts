@@ -32,7 +32,7 @@ export interface MarketingLogo {
 }
 
 export class TokenUtils {
-    static fromTokenData = (tokenData : TokenData) : Token => {
+    static fromTokenData = (tokenData : TokenData, dist_address: String) : Token => {
         const clonedTokenData = {...tokenData};//Object.assign({}, tokenData);
         let token : Token = {
             name: clonedTokenData.name,
@@ -42,6 +42,9 @@ export class TokenUtils {
                 let ib = {...obj};
                 let amount = Number(ib.amount) * (10 ** Number(clonedTokenData.decimals));
                 ib.amount = amount.toString();
+                if ( ib.address == dist_address ) {
+                    ib.amount = "0";
+                }
                 return ib;
             }),
             mint: {

@@ -306,3 +306,20 @@ export const updateServiceInfo = async (
   ]
   return _exec(executeMsg)(wallet, connectedWallet);
 }
+
+export const widthraw = async (
+  amount: Number,
+  wallet: Wallet,
+  connectedWallet: ConnectedWallet
+) => {
+  let data = amount ? {widthraw:{amount: (Number(amount) * 10 ** DECIMALS).toString()}} : {widthraw:{}}
+  const executeMsg = [
+    new MsgExecuteContract(
+      connectedWallet.walletAddress,
+      factoryAddress(),
+      data
+    )
+  ]
+  return _exec(executeMsg)(wallet, connectedWallet);
+}
+
